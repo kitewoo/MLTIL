@@ -71,3 +71,8 @@ lr._residues
 
 # 평가 - R.squared (설명력, 결정계수)
 lr.score(df.Father.values.reshape(-1,1), df.Son.values)
+
+from sklearn.metrics import r2_score
+pred = lr.predict(df.Father.values.reshape(-1,1))
+r2_score(df.Son.values, pred)
+
