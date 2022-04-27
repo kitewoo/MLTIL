@@ -57,7 +57,7 @@ print(array1[5:-1]) #slicing
 
 # 2차원 indexing
 print(array2[0:2,0:3])
-print(array2[[0,1], 0:3])
+print(array2[[0,1], 0:3]) #팬시 인덱싱 방법 : 행, 열로 인덱싱
 # boolean indexing
 print(array1 > 5) 
 
