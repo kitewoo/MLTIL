@@ -66,4 +66,3 @@ for k, column in enumerate(['target','cluster']):
     plt.legend()
     plt.xlabel('PCA Component 1'), plt.ylabel('PCA Component 2')
 plt.show()
-
