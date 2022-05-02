@@ -6,9 +6,12 @@
 '''
 
 from random import random
+from re import U
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
+from scipy import rand
+from sklearn import cluster
 
 from sklearn.datasets import load_iris
 from sklearn.preprocessing import StandardScaler #표준화
@@ -78,3 +81,43 @@ plt.show()
 
 
 
+
+'''kmeans vs mean shift (평균이동)
+kmeans는 데이터의 평균 거리 중심으로 이동한다. 반면에 평균이동은 중심을 데이터가 모여 있는 밀도가 가장 높은 곳으로 이동시킨다
+대역폭 크기로 움직이기 때문에 별도로 군집화 수를 지정할 필요가 없다. '''
+
+from sklearn.cluster import MeanShift
+from sklearn.datasets import make_blobs
+
+X, y = make_blobs(n_samples=200, n_features=2, centers=3, cluster_std=0.8, random_state=0)
+
+meanshift = MeanShift(bandwidth=0.9)
+cluster_labels = meanshift.fit_predict(X)
+print('cluster labels unique :', np.unique(cluster_labels) )
+
+meanshift = MeanShift(bandwidth=1)
+cluster_labels = meanshift.fit_predict(X)
+print('cluster labels unique :', np.unique(cluster_labels) )
+
+''' bandwidth best estimator '''
+from sklearn.cluster import estimate_bandwidth
+bandwidth = estimate_bandwidth(X, quantile=0.2)
+print('best_bandwidth: ' , round(bandwidth, 3))
+
+clusterdf = pd.DataFrame(data=X, columns=['ftr1', 'ftr2'])
+clusterdf['target'] = y
+meanshift = MeanShift(bandwidth=1.444)
+cluster_labels = meanshift.fit_predict(X)
+
+clusterdf['meanshift_labels'] = cluster_labels
+centers = meanshift.cluster_centers_
+unique_labels = np.unique(cluster_labels)
+markers = ['o','s','^','x','*']
+
+for label in unique_labels:
+    label_clsuter= clusterdf[clusterdf['meanshift_labels']==label]
+    center_x_y = centers[label]
+    plt.scatter(x=clusterdf['ftr1'], y = clusterdf['ftr2'], edgecolors='k', marker=markers[label])
+    plt.scatter(x=center_x_y[0], y=center_x_y[1], s=200, color='white', edgecolors='white', alpha=0.9, marker=markers[label])
+    plt.scatter(x=center_x_y[0], y=center_x_y[1], s=70, color='white', edgecolors='k', alpha=0.9, marker='$%d$' % label)
+plt.show()
