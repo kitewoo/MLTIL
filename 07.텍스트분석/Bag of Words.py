@@ -36,7 +36,7 @@ print(cvect.vocabulary_)  # key : index
 
 
 
-#TfidVectorizer(Term Frequency, Inverse Document Frequency)
+#TfidfVectorizer(Term Frequency, Inverse Document Frequency)
 '''Term Frequency 단일 문서 내 빈도 수
 Inverse Document Frequency 전체 문서들 내에서 1회라도 출현했으면 1로 보고 이를 합산한 것의 역수. 즉, 문서군에서 중요도를 판단하기 위한 것'''
 

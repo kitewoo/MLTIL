@@ -27,5 +27,7 @@ cvect.fit(X_train) #학습훈련
 X_train_cv = cvect.transform(X_train)
 print(X_train_cv.shape)
 
+# Test set은 Train set과 동일한 방식으로 vectorize해야함 (fit_transfrom 매소드는 )
+X_test_cv = cvect.transform(X_test) 
 
 
